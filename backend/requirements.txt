@@ -1,0 +1,25 @@
+fastapi
+uvicorn
+SQLAlchemy>=2.0,<3.0
+psycopg[binary]>=3.2,<4.0
+alembic>=1.14,<2.0
+pydantic
+pydantic-settings
+python-dotenv
+python-dateutil==2.9.0.post0
+passlib[bcrypt]
+python-jose[cryptography]
+cryptography
+email-validator
+bcrypt
+openai
+
+# Testing dependencies
+pytest
+httpx
+# Pinned, unlike the lines above, because both are test-infrastructure plugins
+# whose behaviour the suite depends on: pytest-asyncio's `asyncio_mode = auto`
+# (see pytest.ini) drives the SSE generator tests, and a coverage major bump
+# has changed report defaults before.
+pytest-asyncio==1.3.0
+pytest-cov==7.0.0

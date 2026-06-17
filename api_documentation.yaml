@@ -1,0 +1,6160 @@
+openapi: 3.1.0
+info:
+  title: Paradox Connect API
+  version: 0.1.0
+paths:
+  /profile/complete:
+    patch:
+      summary: Complete Profile
+      operationId: complete_profile_profile_complete_patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileCompleteRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  full_name:
+                    type: string
+                  dob:
+                    type: string
+                  house:
+                    type: string
+                  gender:
+                    type: string
+                  phone:
+                    type: string
+                  mess_preference:
+                    type: string
+                  country:
+                    type: string
+                  state:
+                    type: string
+                  city:
+                    type: string
+                  address:
+                    type: string
+                  emergency_contact:
+                    type: string
+                  program:
+                    type: string
+                  course_stage:
+                    type: string
+                  event_preferences:
+                    type: string
+                  photo:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      tags:
+      - Auth
+      description: PATCH /profile/complete
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      operationId: register_auth_register_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  participant_id:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /auth/register
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      operationId: login_auth_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  full_name:
+                    type: string
+                  dob:
+                    type: string
+                  house:
+                    type: string
+                  gender:
+                    type: string
+                  phone:
+                    type: string
+                  country:
+                    type: string
+                  state:
+                    type: string
+                  city:
+                    type: string
+                  address:
+                    type: string
+                  program:
+                    type: string
+                  course_stage:
+                    type: string
+                  photo:
+                    type: string
+                  public_key:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /auth/login
+  /auth/admin/login:
+    post:
+      tags:
+      - Auth
+      summary: Admin Login
+      operationId: admin_login_auth_admin_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  role:
+                    type: string
+                  department:
+                    type: string
+                  designation:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /auth/admin/login
+  /auth/password/forgot:
+    post:
+      tags:
+      - Auth
+      summary: Forgot Password
+      operationId: forgot_password_auth_password_forgot_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  dev_reset_url:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /auth/password/forgot
+  /auth/password/reset:
+    post:
+      tags:
+      - Auth
+      summary: Reset Password
+      operationId: reset_password_auth_password_reset_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /auth/password/reset
+  /auth/password/change:
+    post:
+      tags:
+      - Auth
+      summary: Change Password
+      operationId: change_password_auth_password_change_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  access_token:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /auth/password/change
+  /backend_teams:
+    get:
+      tags:
+      - Backend Teams
+      summary: Get Backend Teams
+      operationId: get_backend_teams_backend_teams_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: GET /backend_teams
+    post:
+      tags:
+      - Backend Teams
+      summary: Create Backend Team
+      operationId: create_backend_team_backend_teams_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendTeamCreateRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  paradox_id:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /backend_teams
+  /backend_teams/{paradox_id}:
+    put:
+      tags:
+      - Backend Teams
+      summary: Update Backend Team
+      operationId: update_backend_team_backend_teams__paradox_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: paradox_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Paradox Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendTeamUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /backend_teams/{paradox_id}
+    delete:
+      tags:
+      - Backend Teams
+      summary: Delete Backend Team
+      operationId: delete_backend_team_backend_teams__paradox_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: paradox_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Paradox Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: DELETE /backend_teams/{paradox_id}
+  /workshops:
+    get:
+      tags:
+      - Workshops
+      summary: List Workshops
+      operationId: list_workshops_workshops_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: GET /workshops
+    post:
+      tags:
+      - Workshops
+      summary: Create Workshop
+      operationId: create_workshop_workshops_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopCreateRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  workshop_id:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /workshops
+  /workshops/public:
+    get:
+      tags:
+      - Workshops
+      summary: List Public Workshops
+      description: 'The workshop programme, readable without signing in.
+
+
+        Deliberately unauthenticated: this is the pre-login workshops catalogue the
+
+        landing page and /workshops render, and it must work for a visitor with no
+
+        account. Only the published fields above are returned — never
+
+        `workshop_team` (which carries staff identities) or internal bookkeeping.
+
+
+        Mirrors GET /events/public. Declared before any `/{workshop_id}` route so
+
+        the literal path is not captured as a workshop id.
+
+
+        Each workshop is passed through the registration-window sync before its
+
+        `registration_open` is read, so a just-lapsed workshop reports closed the
+
+        first time it is listed, not only after something else has resolved it.
+
+
+        The full document (not just the public fields) is fetched so the sync can
+
+        see `registration_closed_by_system` — the internal field is stripped from
+
+        each result afterward, never returned to the caller.'
+      operationId: list_public_workshops_workshops_public_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /workshops/my_registrations:
+    get:
+      tags:
+      - Workshops
+      summary: My Workshop Registrations
+      description: 'This participant''s own workshop bookings.
+
+
+        Mirrors GET /events/my_registrations, and exists for the same reason: the
+
+        booking is stored on the participant document, so without this there is no
+
+        way to read back what you booked — the register response says only that it
+
+        worked. Declared before any `/{workshop_id}` route so the literal path is
+
+        not captured as a workshop id.
+
+
+        `workshops[].workshop_id` holds the workshop''s raw internal UUID, so each entry
+
+        is resolved to the public workshop id and name the UI actually shows.'
+      operationId: my_workshop_registrations_workshops_my_registrations_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /workshops/{workshop_id}:
+    put:
+      tags:
+      - Workshops
+      summary: Update Workshop
+      operationId: update_workshop_workshops__workshop_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /workshops/{workshop_id}
+    delete:
+      tags:
+      - Workshops
+      summary: Delete Workshop
+      operationId: delete_workshop_workshops__workshop_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: DELETE /workshops/{workshop_id}
+  /workshops/{workshop_id}/volunteers:
+    post:
+      tags:
+      - Workshops
+      summary: Assign Workshop Volunteer
+      operationId: assign_workshop_volunteer_workshops__workshop_id__volunteers_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopAssignVolunteerRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: POST /workshops/{workshop_id}/volunteers
+  /workshops/{workshop_id}/volunteers/{user_id}/toggle_scan:
+    put:
+      tags:
+      - Workshops
+      summary: Toggle Volunteer Scan
+      description: 'Switch a volunteer''s desk scanning on or off.
+
+
+        The volunteer is named by the `{user_id}` path segment — as the path always
+
+        advertised, and as the sibling `DELETE .../volunteers/{user_id}` already did.
+
+        The handler used to read a `volunteer_user_id` parameter that appears nowhere
+
+        in the path, so FastAPI made it a *required query* parameter: the RESTful
+        call
+
+        the route documents was a 422, and the volunteer had to be repeated in the
+
+        query string instead.
+
+
+        A filter matching nothing is a 404. It used to answer 200 "Volunteer scanning
+
+        toggled" with `applied: false` buried in the audit row, so an admin who
+
+        believed they had just re-enabled somebody had changed nothing, and found
+        out
+
+        when that volunteer was refused at the desk.'
+      operationId: toggle_volunteer_scan_workshops__workshop_id__volunteers__user_id__toggle_scan_put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: attendance
+        in: query
+        required: true
+        schema:
+          type: boolean
+          title: Attendance
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /workshops/{workshop_id}/logs:
+    get:
+      tags:
+      - Workshops
+      summary: Workshop Logs
+      operationId: workshop_logs_workshops__workshop_id__logs_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: GET /workshops/{workshop_id}/logs
+  /workshops/{workshop_id}/register:
+    post:
+      tags:
+      - Workshops
+      summary: Register For Workshop
+      operationId: register_for_workshop_workshops__workshop_id__register_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: POST /workshops/{workshop_id}/register
+  /workshops/{workshop_id}/seats/stream:
+    get:
+      tags:
+      - Workshops
+      summary: Stream Workshop Seats
+      operationId: stream_workshop_seats_workshops__workshop_id__seats_stream_get
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: text/event-stream (SSE, unauthenticated)
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      security:
+      - HTTPBearer: []
+      description: GET /workshops/{workshop_id}/seats/stream
+  /workshops/{workshop_id}/attendance:
+    post:
+      tags:
+      - Workshops
+      summary: Workshop Attendance
+      operationId: workshop_attendance_workshops__workshop_id__attendance_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      - name: scan_type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: pre-registered
+          title: Scan Type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanQRRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: POST /workshops/{workshop_id}/attendance
+  /workshops/{workshop_id}/participation:
+    get:
+      tags:
+      - Workshops
+      summary: Workshop Participation
+      description: 'Who booked this workshop, who turned up, and what level they are
+        at.
+
+
+        The counterpart of `GET /events/{event_id}/participation`, and gated the same
+
+        way: a Super Admin, **or** a member of this workshop''s own `workshop_team`.
+
+        Any other staff account gets 403 — being staff somewhere is not being staff
+
+        here. Participants have no route to this at all; the fullness figures they
+        may
+
+        read are the counts already on `GET /workshops`.
+
+
+        A team member is authorised whether or not their `attendance` flag is on:
+        that
+
+        flag gates *scanning*, and a volunteer stood down from the door still needs
+        to
+
+        read the room''s own roster.
+
+
+        `course_stage` and `academic_level` are the reason this returns more than
+        the
+
+        log ever could. They are the participant''s real academic standing, written
+        by
+
+        `PATCH /profile/complete` and by the student dataset, and they are what makes
+
+        an "interest by level" breakdown a count rather than an inference from a roll
+
+        number. Everything here is a projection of fields that already exist — no
+
+        field is computed, stored, or derived.'
+      operationId: workshop_participation_workshops__workshop_id__participation_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workshop_id:
+                    type: string
+                  name:
+                    type: string
+                  venue:
+                    type: string
+                  slot_id:
+                    type: string
+                  start_time:
+                    type: string
+                  registration_start:
+                    type: string
+                  registration_end:
+                    type: string
+                  registration_open:
+                    type: string
+                  capacity:
+                    type: string
+                  registration_count:
+                    type: string
+                  participant_count:
+                    type: string
+                  count:
+                    type: string
+                  attended_count:
+                    type: string
+                  absent_count:
+                    type: string
+                  on_spot_count:
+                    type: string
+                  workshop_team:
+                    type: string
+                  participants:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /workshops/{workshop_id}/participants/{participant_id}:
+    patch:
+      tags:
+      - Workshops
+      summary: Update Workshop Participant
+      description: "Correct one participant's record for this workshop — attendance,\
+        \ or how the\nseat was taken.\n\nWhy this exists: attendance could only ever\
+        \ be set by a successful RSA-OAEP\nscan, so a flat battery, a cracked screen,\
+        \ or a QR that expired in the queue\nleft a student who was visibly in the\
+        \ room marked absent, with no way back.\nThis is the authorised correction,\
+        \ and it is deliberately narrow.\n\nAuthorisation is stricter than the roster\
+        \ above: a Super Admin, or a team\nmember **whose `attendance` flag is on**.\
+        \ Writing attendance is the same\nprivilege as scanning it, so somebody stood\
+        \ down from the door cannot set by\nhand what they are not allowed to scan.\n\
+        \nBookkeeping:\n  * `participant_count` follows the change, and only on a\
+        \ real transition, so\n    repeating the same correction cannot inflate the\
+        \ count.\n  * `registration_count` is left alone. The seat was already counted\
+        \ when the\n    booking was made; flipping `booking_type` re-labels that seat,\
+        \ it does not\n    take another one.\n\nEvery call writes a `workshop_logs`\
+        \ row and an audit entry naming the actor —\na hand-set attendance is exactly\
+        \ the kind of record that must not be\nindistinguishable from a scan."
+      operationId: update_workshop_participant_workshops__workshop_id__participants__participant_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      - name: participant_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Participant Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopParticipantUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  participant_id:
+                    type: string
+                  changes:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /workshops/{workshop_id}/volunteers/{user_id}:
+    delete:
+      tags:
+      - Workshops
+      summary: Remove Workshop Volunteer
+      description: 'Take somebody off this workshop''s team.
+
+
+        The missing half of `POST /workshops/{id}/volunteers`: until now a volunteer
+
+        assigned by mistake, or one who has finished for the fest, could only have
+
+        their scanning switched off and stayed on the team''s roster forever.
+
+
+        Super Admin only, matching assignment — who staffs a workshop is an
+
+        organiser''s decision, and a volunteer removing a colleague is not.
+
+
+        Removal is by `workshop_team.user_id` and touches nothing else: the scans
+        that
+
+        person already made stay in `workshop_logs`, with their id on them, because
+        an
+
+        attendance record must not disappear when a shift ends.'
+      operationId: remove_workshop_volunteer_workshops__workshop_id__volunteers__user_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workshop_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workshop Id
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /workshop-slots:
+    get:
+      tags:
+      - Workshop Slots
+      summary: List Workshop Slots
+      description: 'The slot catalogue — no token required. Unlike a workshop, a slot
+        carries
+
+        no participant, staff, or bookkeeping data; it is calendar metadata that a
+
+        create-workshop form needs to read before a user has signed in.'
+      operationId: list_workshop_slots_workshop_slots_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Workshop Slots
+      summary: Create Workshop Slot
+      operationId: create_workshop_slot_workshop_slots_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopSlotCreateRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /workshop-slots
+  /workshop-slots/{slot_id}:
+    put:
+      tags:
+      - Workshop Slots
+      summary: Update Workshop Slot
+      operationId: update_workshop_slot_workshop_slots__slot_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: slot_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Slot Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopSlotUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  workshops_updated:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /workshop-slots/{slot_id}
+    delete:
+      tags:
+      - Workshop Slots
+      summary: Delete Workshop Slot
+      description: 'Deletes the slot, and every workshop scheduled against it — a
+        Super
+
+        Admin decision, not a soft-orphan: a workshop with no slot has no time and
+
+        no way to be scheduled again, so it is removed rather than left dangling.
+
+
+        Participants'' bookings for each removed workshop are pulled the same way
+
+        `delete_workshop` already does for a single workshop, so no participant is
+
+        left holding a reference to a workshop that no longer exists.'
+      operationId: delete_workshop_slot_workshop_slots__slot_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: slot_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Slot Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  workshops_deleted:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /events:
+    get:
+      tags:
+      - Events
+      summary: List Events
+      description: '`created_by` holds the creating admin''s raw internal UUID, which is
+        not JSON
+
+        serialisable, so it is projected out. There is no `logs` field to project
+
+        out any more — the registration roster mirror was removed; the source of
+
+        truth is `participants.events[]`, read by `/capacity` and `/participation`.
+
+
+        `registration.is_open` is attached per event without being stored, so it
+
+        reflects `registration.allowed` and the time window at read time.'
+      operationId: list_events_events_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Events
+      summary: Create Event
+      operationId: create_event_events_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventCreateRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  event_id:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /events
+  /events/public:
+    get:
+      tags:
+      - Events
+      summary: List Public Events
+      description: 'The festival brochure — every event, readable without signing
+        in.
+
+
+        Deliberately unauthenticated: this is the pre-login events catalogue the
+
+        landing page renders, and it must work for a visitor with no account. Only
+
+        the published fields above are returned — never `event_team` (staff
+
+        identities), `registration_fields`, `announcements`, or internal
+
+        bookkeeping.
+
+
+        Declared before any `/{event_id}` route so the literal path is not
+
+        captured as an event id.'
+      operationId: list_public_events_events_public_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /events/{event_id}:
+    put:
+      tags:
+      - Events
+      summary: Update Event
+      operationId: update_event_events__event_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /events/{event_id}
+    delete:
+      tags:
+      - Events
+      summary: Delete Event
+      operationId: delete_event_events__event_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: DELETE /events/{event_id}
+  /events/{event_id}/team:
+    post:
+      tags:
+      - Events
+      summary: Assign Event Team
+      description: 'Add a staff member to this event''s team.
+
+
+        A `user_id` must reference an existing `backend_teams` account — an event
+
+        team names people who can scan, allocate teams, and post announcements,
+
+        and an id nobody holds would grant those to nothing.
+
+
+        One person, one event: enforced by refusing the assignment if `user_id` is
+
+        already on *any* event''s team, this one included (an existing member is
+
+        changed via `PATCH .../team/{user_id}`, not re-added via `POST`).'
+      operationId: assign_event_team_events__event_id__team_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventTeamAssignRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /events/{event_id}/team/{team_user_id}:
+    patch:
+      tags:
+      - Events
+      summary: Update Event Team Role
+      operationId: update_event_team_role_events__event_id__team__team_user_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      - name: team_user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Team User Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventTeamRoleUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PATCH /events/{event_id}/team/{team_user_id}
+    delete:
+      tags:
+      - Events
+      summary: Remove Event Team Member
+      description: Frees this person up to be assigned to a different event's team.
+      operationId: remove_event_team_member_events__event_id__team__team_user_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      - name: team_user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Team User Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /events/{event_id}/register:
+    post:
+      tags:
+      - Events
+      summary: Register For Event
+      operationId: register_for_event_events__event_id__register_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/EventRegistrationInput'
+              - type: 'null'
+              title: Reg Input
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  team_role:
+                    type: string
+                  team_id:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: POST /events/{event_id}/register
+    put:
+      tags:
+      - Events
+      summary: Edit Event Registration
+      operationId: edit_event_registration_events__event_id__register_put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventRegistrationInput'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /events/{event_id}/register
+    delete:
+      tags:
+      - Events
+      summary: Deregister Event
+      operationId: deregister_event_events__event_id__register_delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: DELETE /events/{event_id}/register
+  /events/my_registrations:
+    get:
+      tags:
+      - Events
+      summary: My Registrations
+      operationId: my_registrations_events_my_registrations_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: GET /events/my_registrations
+  /events/{event_id}/capacity:
+    get:
+      tags:
+      - Events
+      summary: Event Capacity
+      description: 'How full this event is right now, as counts and nothing else —
+        Story 3.3.
+
+
+        This is deliberately the only fullness figure a *participant* can read. Every
+
+        other one is staff-gated because every other one returns identities:
+
+        ``participation`` needs ``get_current_staff`` and hands back the roster,
+
+        ``logs`` needs ``super_admin`` and hands back the scan rows. A participant
+
+        deciding whether to walk to a venue needs neither — they need two integers.
+
+
+        So this returns two integers. No ``participant_id``, no name, no email, no
+
+        registration data, for anybody. It is safe to expose precisely because there
+
+        is nothing in it to leak.
+
+
+        ``registered`` is counted from the participants collection, which
+
+        ``deregister_event`` pulls from, so it falls when somebody cancels rather
+
+        than only ever rising.
+
+
+        ``attended_today`` counts distinct participants, not scan rows — see
+
+        ``_unique_attendance_today``.
+
+
+        The published capacity is **not** returned. It already rides in the event''s
+
+        ``registration`` map, which both ``GET /events`` and ``GET /events/public``
+
+        already return in full, so the client that asks this question is holding it
+
+        already. Parsing it in a second place is how two places come to disagree.'
+      operationId: event_capacity_events__event_id__capacity_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  event_id:
+                    type: string
+                  registered:
+                    type: string
+                  attended_today:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /events/{event_id}/participation:
+    get:
+      tags:
+      - Events
+      summary: View Participation
+      operationId: view_participation_events__event_id__participation_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: string
+                  participants:
+                    type: string
+                  event_team:
+                    type: string
+                  total_daily_scans:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: GET /events/{event_id}/participation
+  /events/{event_id}/allocate_teams:
+    post:
+      tags:
+      - Events
+      summary: Allocate Teams
+      operationId: allocate_teams_events__event_id__allocate_teams_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: POST /events/{event_id}/allocate_teams
+  /events/{event_id}/scan:
+    post:
+      tags:
+      - Events
+      summary: Scan Event Participant
+      description: 'Admit one participant at an event gate.
+
+
+        This route had the largest blind spot in the system. A scan of somebody not
+
+        registered for the event returned **200** with `is_participating: false` and
+
+        wrote nothing at all — no log row, no audit row — so a refused entry was
+
+        indistinguishable from no scan ever having happened. It was also the only
+        scan
+
+        endpoint in the codebase with no `log_audit` call of any kind, successful
+        or
+
+        otherwise.
+
+
+        The response is deliberately unchanged, including the 200 for a non-participant:
+
+        the gate app decides what to show from `is_participating`, and changing the
+
+        status code would break it. What changes is that all three outcomes — admitted,
+
+        refused, and already-scanned — now leave a record.'
+      operationId: scan_event_participant_events__event_id__scan_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanQRRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  is_participating:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /events/{event_id}/my_daily_scans:
+    get:
+      tags:
+      - Events
+      summary: My Daily Scans
+      operationId: my_daily_scans_events__event_id__my_daily_scans_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  daily_unique_scans:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: GET /events/{event_id}/my_daily_scans
+  /events/{event_id}/logs:
+    get:
+      tags:
+      - Events
+      summary: Event Logs
+      description: 'Every attendance scan recorded for this event.
+
+
+        These rows have always been written by ``POST /events/{event_id}/scan`` but
+
+        nothing read them back: participation only reported *today''s* count, and
+
+        ``my_daily_scans`` only the caller''s own. That left the per-event attendance
+
+        history unreachable, which is what the dashboard''s event log view needs.
+
+
+        Mirrors ``GET /workshops/{workshop_id}/logs`` — same super-admin gate, same
+
+        ``{"logs": [...]}`` envelope — so the two read identically on the client.
+
+
+        Rows key on the event''s internal UUID, not its readable ``event_id``, so the lookup
+
+        happens here rather than being a detail every caller has to know.'
+      operationId: event_logs_events__event_id__logs_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /events/{event_id}/participant_teams/{participant_id}:
+    put:
+      tags:
+      - Events
+      summary: Update Participant Team
+      operationId: update_participant_team_events__event_id__participant_teams__participant_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      - name: participant_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Participant Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamUpdateInput'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /events/{event_id}/participant_teams/{participant_id}
+  /events/{event_id}/announcements:
+    post:
+      tags:
+      - Events
+      summary: Create Announcement
+      description: 'Publish a notification about this event to everybody registered
+        for it.
+
+
+        Restricted to the event''s own Event Head, or a Super Admin — a volunteer
+
+        or member on the team can scan and view participation, but broadcasting to
+
+        every registrant is a head-of-event decision.
+
+
+        Appended to `event.announcements`; delivered to participants via
+
+        `GET /{event_id}/announcements` (poll) or `GET /{event_id}/announcements/stream`
+
+        (SSE) — see below.'
+      operationId: create_announcement_events__event_id__announcements_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnouncementCreateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  announcement:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+    get:
+      tags:
+      - Events
+      summary: List Announcements
+      description: 'Newest first. Readable by whoever the announcement is *for* —
+        a registered
+
+        participant — plus whoever might have sent it: the event''s own team, or a
+
+        Super Admin.'
+      operationId: list_announcements_events__event_id__announcements_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /events/{event_id}/announcements/stream:
+    get:
+      tags:
+      - Events
+      summary: Stream Announcements
+      description: 'Live announcements for this event, as `text/event-stream`.
+
+
+        Authenticated exactly like every other route in this API — an
+
+        `Authorization: Bearer` header via `get_current_user` — rather than a
+
+        `?token=` query parameter. The browser''s native `EventSource` cannot send
+
+        a header, so a browser client must instead open this with `fetch` and read
+
+        `response.body` as a stream (or a small helper library such as
+
+        `@microsoft/fetch-event-source` that does that parsing). This keeps the
+
+        token out of the URL — and therefore out of server access logs, browser
+
+        history, and any `Referer` header — matching every other endpoint here.
+
+
+        Access is the same as the polling list above: the event''s registered
+
+        participants, its team, or a Super Admin.'
+      operationId: stream_announcements_events__event_id__announcements_stream_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: event_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Event Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: text/event-stream (SSE)
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /mess:
+    get:
+      tags:
+      - Mess
+      summary: List Messes
+      operationId: list_messes_mess_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: GET /mess
+    post:
+      tags:
+      - Mess
+      summary: Create Mess
+      operationId: create_mess_mess_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessCreateRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /mess
+  /mess/register:
+    post:
+      tags:
+      - Mess
+      summary: Register For Mess
+      description: 'Ask for a meal plan during the fest.
+
+
+        Idempotent: asking twice is not an error, it just stays requested.
+
+
+        Refused once a hall has been allotted, matching
+
+        `POST /hostels/register` — moving somebody who has already been seated is
+        an
+
+        organiser''s decision, and re-running allocation will not move them anyway
+
+        (the allocator only looks at participants with no `mess.mess_id`).'
+      operationId: register_for_mess_mess_register_post
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Mess
+      summary: Cancel Mess Request
+      description: 'Withdraw a pending meal plan request.
+
+
+        Refused once a hall has been allotted: releasing a seat somebody has been
+
+        given is an organiser decision, not a self-service one. Same rule as
+
+        `DELETE /hostels/register`.'
+      operationId: cancel_mess_request_mess_register_delete
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /mess/{mess_id}:
+    put:
+      tags:
+      - Mess
+      summary: Update Mess
+      operationId: update_mess_mess__mess_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /mess/{mess_id}
+    delete:
+      tags:
+      - Mess
+      summary: Delete Mess
+      operationId: delete_mess_mess__mess_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: DELETE /mess/{mess_id}
+    get:
+      tags:
+      - Mess
+      summary: Get Mess
+      description: 'A single hall''s document. Declared last so it never captures
+        a literal
+
+        path (`/my_mess`, `/allocate`) defined earlier in this file.'
+      operationId: get_mess_mess__mess_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /mess/{mess_id}/menu:
+    put:
+      tags:
+      - Mess
+      summary: Update Mess Menu
+      operationId: update_mess_menu_mess__mess_id__menu_put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessMenuRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /mess/{mess_id}/menu
+  /mess/{mess_id}/team:
+    post:
+      tags:
+      - Mess
+      summary: Assign Mess Team
+      operationId: assign_mess_team_mess__mess_id__team_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessAssignTeamRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: POST /mess/{mess_id}/team
+  /mess/{mess_id}/team/{team_user_id}/toggle_scan:
+    put:
+      tags:
+      - Mess
+      summary: Toggle Mess Scan
+      operationId: toggle_mess_scan_mess__mess_id__team__team_user_id__toggle_scan_put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      - name: team_user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Team User Id
+      - name: logging
+        in: query
+        required: true
+        schema:
+          type: boolean
+          title: Logging
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /mess/{mess_id}/team/{team_user_id}/toggle_scan
+  /mess/allocate:
+    post:
+      tags:
+      - Mess
+      summary: Allocate Messes
+      operationId: allocate_messes_mess_allocate_post
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /mess/allocate
+  /mess/pay:
+    post:
+      tags:
+      - Mess
+      summary: Pay Mess Fee
+      description: 'Simulate settling the mess fee.
+
+
+        Mock end to end: there is no real gateway behind this, `simulate_payment`
+
+        always succeeds today, and `MESS_FEE` is the only amount this can ever
+
+        charge — never one the client supplies. Deliberately independent of
+
+        `mess.registered` / `mess.mess_id`: this only records that the fee was
+
+        paid, it does not opt a participant into allocation or place them in a
+
+        hall, so it can be called in any order relative to those.'
+      operationId: pay_mess_fee_mess_pay_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MockPaymentRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paid:
+                    type: string
+                  transaction_id:
+                    type: string
+                  amount:
+                    type: string
+                  method:
+                    type: string
+                  paid_at:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /mess/my_mess:
+    get:
+      tags:
+      - Mess
+      summary: My Mess
+      operationId: my_mess_mess_my_mess_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allotted_mess:
+                    type: string
+                  mess_details:
+                    type: string
+                  slots:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: GET /mess/my_mess
+  /mess/{mess_id}/scan:
+    post:
+      tags:
+      - Mess
+      summary: Scan Mess
+      description: 'Admit one participant to one sitting.
+
+
+        Every refusal below is recorded with a reason. This is the endpoint a
+
+        participant is most likely to come back and dispute — "I was turned away from
+
+        dinner on day 2" — and before this the only trace a refusal left was a 400
+        on
+
+        a handheld device. Successful scans keep their original `MESS_SCAN` audit
+        row
+
+        and its exact `details` keys, because `GET /audit-logs/summary` counts meals
+
+        from them.'
+      operationId: scan_mess_mess__mess_id__scan_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      - name: slot
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Slot
+      - name: day
+        in: query
+        required: true
+        schema:
+          type: integer
+          title: Day
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanQRRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /mess/{mess_id}/statistics:
+    get:
+      tags:
+      - Mess
+      summary: Mess Statistics
+      operationId: mess_statistics_mess__mess_id__statistics_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: mess_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Mess Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_allocated:
+                    type: string
+                  capacity:
+                    type: string
+                  allotted_participants:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: GET /mess/{mess_id}/statistics
+  /hostels:
+    get:
+      tags:
+      - Hostels
+      summary: List Hostels
+      operationId: list_hostels_hostels_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: GET /hostels
+    post:
+      tags:
+      - Hostels
+      summary: Create Hostel
+      operationId: create_hostel_hostels_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HostelCreateRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  hostel_id:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /hostels
+  /hostels/{hostel_id}/team:
+    post:
+      tags:
+      - Hostels
+      summary: Assign Hostel Team
+      operationId: assign_hostel_team_hostels__hostel_id__team_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: hostel_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Hostel Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HostelAssignTeamRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: POST /hostels/{hostel_id}/team
+  /hostels/{hostel_id}/team/{team_user_id}/toggle_scan:
+    put:
+      tags:
+      - Hostels
+      summary: Toggle Hostel Scan
+      operationId: toggle_hostel_scan_hostels__hostel_id__team__team_user_id__toggle_scan_put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: hostel_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Hostel Id
+      - name: team_user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Team User Id
+      - name: attendance
+        in: query
+        required: true
+        schema:
+          type: boolean
+          title: Attendance
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /hostels/{hostel_id}/team/{team_user_id}/toggle_scan
+  /hostels/allocate:
+    post:
+      tags:
+      - Hostels
+      summary: Allocate Hostels
+      operationId: allocate_hostels_hostels_allocate_post
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: POST /hostels/allocate
+  /hostels/pay:
+    post:
+      tags:
+      - Hostels
+      summary: Pay Hostel Fee
+      description: 'Simulate settling the hostel fee.
+
+
+        Mock end to end: there is no real gateway behind this, `simulate_payment`
+
+        always succeeds today, and `HOSTEL_FEE` is the only amount this can ever
+
+        charge — never one the client supplies. Deliberately independent of
+
+        `accommodation.registered` / `accommodation.hostel_id`: this only records
+
+        that the fee was paid, it does not opt a participant into allocation or
+
+        place them in a block, so it can be called in any order relative to those.'
+      operationId: pay_hostel_fee_hostels_pay_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MockPaymentRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paid:
+                    type: string
+                  transaction_id:
+                    type: string
+                  amount:
+                    type: string
+                  method:
+                    type: string
+                  paid_at:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /hostels/register:
+    post:
+      tags:
+      - Hostels
+      summary: Register For Accommodation
+      description: 'Ask for a hostel place during the fest.
+
+
+        `POST /hostels/allocate` only considers participants whose
+
+        `accommodation.registered` is True, and registration sets that flag False.
+
+        This is what lets a participant opt in, so allocation has anyone to place.
+
+        Declared before `/{hostel_id}/...` routes so the literal path is not
+
+        captured as a hostel id.
+
+
+        Idempotent: asking twice is not an error, it just stays requested.'
+      operationId: register_for_accommodation_hostels_register_post
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Hostels
+      summary: Cancel Accommodation Request
+      description: 'Withdraw a pending accommodation request.
+
+
+        Refused once a hostel has been allotted: releasing an allocated bed is an
+
+        organiser decision, not a self-service one.'
+      operationId: cancel_accommodation_request_hostels_register_delete
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /hostels/my_hostel:
+    get:
+      tags:
+      - Hostels
+      summary: My Hostel
+      operationId: my_hostel_hostels_my_hostel_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assigned_hostel:
+                    type: string
+                  room:
+                    type: string
+                  inside:
+                    type: string
+                  arrival:
+                    type: string
+                  departure:
+                    type: string
+                  registered:
+                    type: string
+                  volunteers:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      description: GET /hostels/my_hostel
+  /hostels/{hostel_id}/scan:
+    post:
+      tags:
+      - Hostels
+      summary: Scan Hostel
+      description: 'Record one participant crossing a hostel door.
+
+
+        The most safety-relevant endpoint in the system: `accommodation.inside` is
+        what
+
+        answers "who is in this building" if the building ever has to be evacuated,
+        and
+
+        `arrival` / `departure` are what answer "was this student ever here at all".
+
+
+        Every refusal is now recorded with the state that caused it. Before this,
+        a
+
+        refused scan produced a 400 at the door and nothing else — so a resident
+
+        insisting they had been let out, against a record saying they were still
+
+        inside, was an argument with no evidence on either side. The state triple
+
+        (`inside`, `arrival`, `departure`) goes into every line precisely so that
+
+        argument becomes answerable.'
+      operationId: scan_hostel_hostels__hostel_id__scan_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: hostel_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Hostel Id
+      - name: action
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Action
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanQRRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /hostels/{hostel_id}:
+    put:
+      tags:
+      - Hostels
+      summary: Update Hostel
+      description: 'Edit a block''s `name` or `capacity`, Super Admin only.
+
+
+        Mirrors `mess.update_mess`: every field optional, nothing to update is
+        a
+
+        400, and a `capacity` cut below the block''s real bed ceiling
+
+        (`min(capacity, sharing * num_rooms)`, the same ceiling `allocate_hostels`
+
+        enforces) is logged rather than refused — the residents already assigned
+
+        keep their beds, and allocation simply stops placing anyone new here
+        until
+
+        capacity is raised again or beds free up. Rooming (`sharing`/`num_rooms`)
+
+        and `gender` are not editable through this route; see
+
+        `HostelUpdateRequest`.'
+      operationId: update_hostel_hostels__hostel_id__put
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: hostel_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Hostel Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HostelUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: PUT /hostels/{hostel_id}
+    delete:
+      tags:
+      - Hostels
+      summary: Delete Hostel
+      description: 'Delete a hostel block, Super Admin only.
+
+
+        Cascades: every participant currently pointing at this hostel has their
+
+        accommodation reset (hostel_id, room, inside, arrival, departure) so they
+
+        are no longer marked as living somewhere that no longer exists.
+
+        `registered` is left untouched, since they still want a bed — just not this
+
+        one — and should be eligible for a future `/allocate` run.'
+      operationId: delete_hostel_hostels__hostel_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: hostel_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Hostel Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  participants_reset:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+    get:
+      tags:
+      - Hostels
+      summary: Get Hostel
+      description: 'A single hostel''s document. Declared last so it never captures
+        a literal
+
+        path (`/allocate`, `/register`, `/my_hostel`) defined earlier in this file.'
+      operationId: get_hostel_hostels__hostel_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: hostel_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Hostel Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /hostels/{hostel_id}/statistics:
+    get:
+      tags:
+      - Hostels
+      summary: Hostel Statistics
+      operationId: hostel_statistics_hostels__hostel_id__statistics_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: hostel_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Hostel Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_allocated:
+                    type: string
+                  capacity:
+                    type: string
+                  current_occupancy:
+                    type: string
+                  currently_inside:
+                    type: string
+                  allotted_participants:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+      description: GET /hostels/{hostel_id}/statistics
+  /audit-logs/summary:
+    get:
+      tags:
+      - Audit
+      summary: Audit Log Summary
+      description: 'Exact counts over the trail, with no row limit.
+
+
+        `GET /audit-logs` takes a `limit`, which is right for a table but wrong for
+        a
+
+        total: the dashboard was reading `rows.length` off a capped page and labelling
+
+        it "Recorded Actions", so a fest with more history than the cap silently
+
+        reported the cap. Counting server-side is the only way for those figures to
+        be
+
+        totals rather than floors, and it costs one request instead of paging the
+
+        whole trail into the browser.
+
+
+        `actor_ids` is the distinct set, not a sample, which is what lets the caller
+
+        answer "which staff acted in this window" exactly. It replaces intersecting
+
+        the staff roster with whatever actors happened to appear in the newest N rows.
+
+
+        `meals` is present only when the window could contain `MESS_SCAN` rows — that
+
+        is, when `action` is unset or is `MESS_SCAN` — and is `null` otherwise, so
+        a
+
+        caller asking about hostel entries is not handed a meal count.'
+      operationId: audit_log_summary_audit_logs_summary_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: target_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Id
+      - name: action
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Action
+      - name: since
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Since
+      - name: until
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Until
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: string
+                  by_action:
+                    type: string
+                  distinct_actors:
+                    type: string
+                  actor_ids:
+                    type: string
+                  meals:
+                    type: string
+                  window:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /audit-logs:
+    get:
+      tags:
+      - Audit
+      summary: View Audit Logs
+      description: 'The audit trail, newest first.
+
+
+        ``target_id`` narrows the trail to one entity — an event, workshop, mess hall,
+
+        or hostel block — which is what the dashboard''s per-entity log view reads.
+
+        Filtering server-side rather than pulling the whole trail and sifting it in
+        the
+
+        client matters here: ``limit`` would otherwise silently cut off an entity''s
+
+        older entries, because it applies before any client-side filter can run.
+
+
+        ``action`` narrows to one kind of action, e.g. ``HOSTEL_ENTRY``. Both are
+
+        optional, so the unfiltered call is unchanged.
+
+
+        ``since`` and ``until`` are ISO 8601 instants bounding ``timestamp``, half-open
+
+        so consecutive windows tile cleanly. They exist because "today" was previously
+
+        approximated by fetching the newest N rows and filtering them in the browser,
+
+        which makes any daily figure a floor the moment the fest produces more than
+        N
+
+        rows in a day. Filtering here removes the cap from the question entirely.
+
+        ``GET /audit-logs/summary`` takes the same four filters and returns exact
+
+        counts over them.
+
+
+        Every entry carries a ``names`` map from each person id it mentions to that
+
+        person''s name, so the client can show "Priya Raman" where it used to show
+
+        ``BT1755…`` without knowing which collection an id belongs to. Entries written
+
+        since names began being recorded already carry ``actor_name``; the map is
+        what
+
+        makes the entries written before that readable too. ``actor_id`` and
+
+        ``details`` are unchanged, so exports and filters that key on ids still work.'
+      operationId: view_audit_logs_audit_logs_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+          default: 100
+          title: Limit
+      - name: target_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Id
+      - name: action
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Action
+      - name: since
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Since
+      - name: until
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Until
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /participants/statistics:
+    get:
+      tags:
+      - Participants
+      summary: Participant Statistics
+      description: 'Fest-wide participant counts, for the admin overview board.
+
+
+        Counts only. No name, email, phone, address, photo, or participant id leaves
+
+        this endpoint, so the dashboard can read fest-wide totals without exposing
+        a
+
+        roster — the per-entity ``/statistics`` endpoints remain the only way to see
+
+        who is actually allotted where.
+
+
+        Super Admins only, matching ``/mess/{id}/statistics`` and
+
+        ``/hostels/{id}/statistics``.
+
+
+        ``total_registered`` is every account in the ``participants`` collection,
+
+        which is what ``POST /auth/register`` creates — a real registration total
+
+        rather than a count of people who happen to have turned up somewhere.'
+      operationId: participant_statistics_participants_statistics_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_registered:
+                    type: string
+                  profile_complete:
+                    type: string
+                  profile_incomplete:
+                    type: string
+                  mess_registered:
+                    type: string
+                  mess_allotted:
+                    type: string
+                  hostel_registered:
+                    type: string
+                  hostel_allotted:
+                    type: string
+                  hostel_pending:
+                    type: string
+                  currently_on_campus:
+                    type: string
+                  with_event_registrations:
+                    type: string
+                  with_workshop_registrations:
+                    type: string
+                  by_house:
+                    type: string
+                  by_program:
+                    type: string
+                  by_course_stage:
+                    type: string
+                  by_gender:
+                    type: string
+                  signups_by_day:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /participants:
+    get:
+      tags:
+      - Participants
+      summary: List Participants
+      description: 'The fest-wide participant roster — Story 7.3''s missing read half.
+
+
+        Super Admins only, matching every other roster in the API. ``/statistics``
+
+        above stays deliberately roster-free: a dashboard that shows totals to
+
+        whoever can see the dashboard must not be the thing that leaks a list of
+
+        names, so the two are separate endpoints rather than one endpoint with a
+
+        flag.
+
+
+        Projection is an allow-list. ``password_hash`` and ``qr_secrets`` are the
+        two
+
+        fields that must never leave this collection, and an inclusion projection
+
+        means a field added to the schema later stays private until it is named here.
+
+        ``photo`` and ``embedding`` are excluded for size, not secrecy — a roster
+        of
+
+        200 base64 photographs is a response nobody wants.
+
+
+        ``q`` matches a name, email, or participant id, case-insensitively, so one
+
+        search box finds a person however the admin knows them.'
+      operationId: list_participants_participants_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Q
+      - name: house
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: House
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+          default: 200
+          title: Limit
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: string
+                  participants:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /participants/{participant_id}:
+    patch:
+      tags:
+      - Participants
+      summary: Update Participant
+      description: "Edit another person's record — Story 7.3's missing write half.\n\
+        \nSuper Admins only. Until this existed there was no endpoint anywhere that\n\
+        wrote to a participant document other than the participant's own\n``PATCH\
+        \ /profile/complete``, so an admin who spotted a misspelled name on a\nhostel\
+        \ roster could do nothing about it.\n\nDeliberately narrow. Only ``profile``\
+        \ fields are writable:\n\n* ``email`` and ``participant_id`` are identity\
+        \ — ``participant_id`` is\n  derived from the email by ``generate_participant_id``\
+        \ and is the key every\n  roster, log row, and QR payload joins on.\n* ``password_hash``\
+        \ and ``qr_secrets`` are credentials.\n* ``mess`` / ``accommodation`` / ``events``\
+        \ / ``workshops`` are owned by the\n  allocation and registration routes,\
+        \ which enforce capacity and state. An\n  admin writing them directly would\
+        \ put a participant in a hall with no seat\n  left, or mark them inside a\
+        \ block the scanner thinks they left.\n\nEvery field is optional and only\
+        \ the ones present are written, so a form that\nfixes a phone number cannot\
+        \ blank an address."
+      operationId: update_participant_participants__participant_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: participant_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Participant Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantAdminUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  profile:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /embeddings:
+    post:
+      tags:
+      - Embeddings
+      summary: Create Embedding
+      description: 'Text -> embedding vector(s), proxied to whatever OpenAI-compatible
+
+        provider this deployment is configured for (see the EMBEDDINGS_* /
+
+        OPENAI_* env vars above). Request and response shapes match the openai
+
+        library''s `client.embeddings.create(...)` exactly.
+
+
+        Requires authentication (participant or staff), and is rate limited to
+
+        one call per user per RATE_LIMIT_SECONDS to keep it from being used as a
+
+        free-standing embeddings proxy.
+
+
+        Optional fields are only forwarded when set, rather than as explicit
+
+        nulls, since some local OpenAI-compatible servers reject unrecognised
+
+        null fields.'
+      operationId: create_embedding_embeddings_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbeddingRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /queries:
+    post:
+      tags:
+      - Queries
+      summary: Raise Query
+      description: 'Raise a query — Story 6.1, and the durable record Story 5.4 needs.
+
+
+        The target entity is validated at write time rather than at read time: a
+
+        query naming a block that does not exist would otherwise be accepted, routed
+
+        to nobody, and sit unanswered looking exactly like a query nobody has got
+        to
+
+        yet.'
+      operationId: raise_query_queries_post
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryCreateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  query_id:
+                    type: string
+                  query:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Queries
+      summary: List Queries
+      description: 'The shared queue — Story 6.3, and the source for the operational
+
+        dashboard''s open-queries and hostel-issues panels (Story 9.1).
+
+
+        Not scoped by entity any more: a Super Admin and every member of the query
+
+        resolution team see the same unrestricted queue, across every category
+
+        including ``general``, resolved queries included — a query team member can
+
+        self-claim any of it by ``PATCH``-ing ``assigned_to`` to their own id. A
+
+        staff member who is on neither gets a 403; there is no per-entity scope
+
+        left to fall back to an empty result with.
+
+
+        ``status`` and ``category`` filter server-side for the same reason
+
+        ``/audit-logs`` does: ``limit`` applies before any client-side filter could.'
+      operationId: list_queries_queries_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      - name: category
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+          default: 100
+          title: Limit
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /queries/mine:
+    get:
+      tags:
+      - Queries
+      summary: My Queries
+      description: 'Track your own queries — Story 6.2. Newest first, replies included,
+        so the
+
+        participant sees the status *and* what was said about it.
+
+
+        Declared before ``/{query_id}`` so the literal path is not captured as an
+        id.'
+      operationId: my_queries_queries_mine_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /queries/{query_id}:
+    patch:
+      tags:
+      - Queries
+      summary: Update Query
+      description: 'Set status and assignment — Story 6.3.
+
+
+        Only the fields a request carries are written, so a screen that reassigns
+        a
+
+        query cannot blank its status on the way past. A query team member sets
+
+        ``assigned_to`` to their own id to self-claim a query; a Super Admin may
+
+        assign to anyone.'
+      operationId: update_query_queries__query_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: query_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Query Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  query:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /queries/{query_id}/replies:
+    post:
+      tags:
+      - Queries
+      summary: Reply To Query
+      description: "The conversation — Story 6.4, and the half of 6.2 that makes a\
+        \ status useful.\n\nTakes either token type: the participant who raised it\
+        \ and a query team\nmember write to the same thread. Nobody else can read\
+        \ or write it, which is\nchecked per-role rather than per-token, so a staff\
+        \ member off the query\nteam is refused even though their token is valid.\n\
+        \nNeither refusal discloses whether the id exists. The route used to look\
+        \ the\nquery up and 404 first, so any authenticated user could tell a real\
+        \ query id\nfrom an invented one — and these threads hold participants' free\
+        \ text, the one\nplace in this API where a student writes something another\
+        \ user reads back.\nThe two sides get there differently, because their refusals\
+        \ are different\nkinds of thing:\n\n  * a staff member off the query team\
+        \ may handle *no* query, so which one was\n    asked for never enters into\
+        \ it. Refused before the lookup, exactly as\n    `update_query` and every\
+        \ other staff-side route here already does.\n  * a participant may only handle\
+        \ their *own*, which cannot be decided without\n    the document. So \"not\
+        \ yours\" and \"not there\" collapse into the same 404:\n    for a participant,\
+        \ no other query exists — the same thing `GET\n    /queries/mine` says by\
+        \ omitting it from the list."
+      operationId: reply_to_query_queries__query_id__replies_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: query_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Query Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryReplyRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  reply:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /queries/team:
+    get:
+      tags:
+      - Queries
+      summary: List Query Team
+      description: The current roster — Super Admin only, same as `event_team` details
+        are staff-gated.
+      operationId: list_query_team_queries_team_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Queries
+      summary: Add Query Team Member
+      description: 'Add a staff member to the query resolution team — Super Admin
+        only.
+
+
+        `user_id` must already exist in `backend_teams_collection`; this roster
+
+        grants query access on top of an existing staff account, it does not
+
+        create one.'
+      operationId: add_query_team_member_queries_team_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryTeamAssignRequest'
+        required: true
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  member:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /queries/team/{user_id}:
+    delete:
+      tags:
+      - Queries
+      summary: Remove Query Team Member
+      description: Frees this person from query duty. Does not touch anything they
+        already replied to or were assigned.
+      operationId: remove_query_team_member_queries_team__user_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+  /issues:
+    post:
+      tags:
+      - Issues
+      summary: Report Issue
+      description: 'File a hostel or mess fault — Story 5.4. Participants only, and
+        only against
+
+        the facility they are actually placed in: a hostel report requires
+
+        accommodation.hostel_id to match, a mess report requires mess.mess_id to
+
+        match, otherwise 403. The facility must exist (404 otherwise) and the
+
+        category must be one the facility type has (400 otherwise). A participant
+        may
+
+        hold at most 10 unresolved reports per facility; resolving one frees a slot.
+
+        Status starts at open. Audited as ISSUE_REPORT against the facility id.
+
+
+        Declared before `/{issue_id}` routes so nothing literal is captured as an
+        id.'
+      operationId: report_issue_issues_post
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueCreateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  issue_id:
+                    type: string
+                  status:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Issues
+      summary: List Issues
+      description: 'The reports this staff member is answerable for.
+
+
+        A Super Admin sees every report in the fest; everybody else sees exactly the
+
+        blocks and halls whose hostel_team or mess_team names them — the same
+
+        membership test /hostels/{id}/scan and /mess/{id}/scan make, but deliberately
+
+        not gated on the logging flag, since seeing a fault on your own block is not
+
+        the same permission as working its turnstile. A staffer on no team gets an
+
+        empty list, not a 403 — having no duty is not an authorization failure, and
+        a
+
+        console that errors at a volunteer between postings reads as a bug.
+
+
+        Each row carries a reporter object with the participant''s id, name, phone
+        and
+
+        room, so the team can call them back. status, facility_type and facility_id
+
+        narrow the list; an unrecognised status is a 400 rather than a filter that
+
+        silently matches nothing.'
+      operationId: list_issues_issues_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      - name: facility_type
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Facility Type
+      - name: facility_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Facility Id
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+          default: 100
+          title: Limit
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: string
+                  issues:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /issues/mine:
+    get:
+      tags:
+      - Issues
+      summary: My Issues
+      description: 'Every report this participant has filed, newest first, each with
+        the status
+
+        history that makes the story trackable rather than a write-only suggestion
+
+        box. Returns {count, issues}. An update''s note is included; which volunteer
+
+        wrote it is not — that is staff bookkeeping and the audit trail keeps it.
+        No
+
+        other reporter''s details appear here.
+
+
+        Declared before `/{issue_id}` so the literal path is not captured as an id.'
+      operationId: my_issues_issues_mine_get
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: string
+                  issues:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /issues/{issue_id}:
+    patch:
+      tags:
+      - Issues
+      summary: Update Issue
+      description: 'Move a report along, and say something the reporter will read.
+
+
+        Scoped identically to GET /issues — only a Super Admin or somebody on that
+
+        facility''s own team may answer for it, so the reporter cannot resolve their
+
+        own report. Every call appends to `updates` rather than overwriting, so a
+
+        participant sees the history rather than only the latest word. A note with
+        no
+
+        status change is valid; an empty body is a 400, as is a status outside
+
+        open | in_progress | resolved. Audited as ISSUE_UPDATE against the facility
+
+        id.
+
+
+        The report is resolved and the caller authorised before the body is judged.
+
+        The other order reported the body''s shape for an issue that was not there
+        —
+
+        "Provide a status, a note, or both" against `ISS-NOPE` — which sends whoever
+
+        is debugging it to look at their payload when the id is what is wrong. Same
+
+        reason `update_participant_team` and `update_query` check existence first.'
+      operationId: update_issue_issues__issue_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: issue_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Issue Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueUpdateRequest'
+      responses:
+        '401':
+          description: Invalid or expired token, or user not found
+        '403':
+          description: Insufficient permissions or wrong token type
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  issue_id:
+                    type: string
+                  status:
+                    type: string
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '404':
+          description: Entity not found
+components:
+  schemas:
+    AnnouncementCreateRequest:
+      properties:
+        message:
+          type: string
+          minLength: 1
+          title: Message
+        priority:
+          type: string
+          enum:
+          - low
+          - mid
+          - high
+          title: Priority
+          default: mid
+      type: object
+      required:
+      - message
+      title: AnnouncementCreateRequest
+    BackendTeamCreateRequest:
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email
+        password:
+          type: string
+          minLength: 8
+          title: Password
+        role:
+          type: string
+          enum:
+          - super_admin
+          - admin
+          - other
+          - volunteer
+          title: Role
+        department:
+          type: string
+          enum:
+          - technical
+          - sports
+          - culturals
+          - uhc
+          - hostels
+          - mess
+          - workshops
+          title: Department
+        designation:
+          type: string
+          minLength: 1
+          title: Designation
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      required:
+      - email
+      - password
+      - role
+      - department
+      - designation
+      title: BackendTeamCreateRequest
+    BackendTeamUpdateRequest:
+      properties:
+        designation:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+          title: Designation
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      title: BackendTeamUpdateRequest
+      description: '`role` and `department` are deliberately absent: both drive the
+
+        `paradox_id` prefix assigned at creation and are treated as immutable —
+
+        changing either means deleting the account and creating a new one, not
+
+        patching this one. See `create_backend_team` / `update_backend_team`.'
+    ChangePasswordRequest:
+      properties:
+        current_password:
+          type: string
+          title: Current Password
+        new_password:
+          type: string
+          minLength: 8
+          title: New Password
+      type: object
+      required:
+      - current_password
+      - new_password
+      title: ChangePasswordRequest
+    EmbeddingRequest:
+      properties:
+        input:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Input
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        encoding_format:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Encoding Format
+        dimensions:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Dimensions
+        user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User
+      type: object
+      required:
+      - input
+      title: EmbeddingRequest
+    EmergencyContact:
+      properties:
+        name:
+          type: string
+          title: Name
+        relation:
+          type: string
+          title: Relation
+        phone:
+          type: string
+          title: Phone
+      type: object
+      required:
+      - name
+      - relation
+      - phone
+      title: EmergencyContact
+    EventCreateRequest:
+      properties:
+        event_type:
+          type: string
+          enum:
+          - technical
+          - culturals
+          - sports
+          - others
+          title: Event Type
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        description:
+          type: string
+          minLength: 1
+          title: Description
+        poster:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Poster
+          default: ''
+        team:
+          $ref: '#/components/schemas/TeamRule'
+        prize_money:
+          items:
+            $ref: '#/components/schemas/PrizeMoney'
+          type: array
+          title: Prize Money
+          default: []
+        registration:
+          $ref: '#/components/schemas/RegistrationWindow'
+        schedule:
+          items:
+            $ref: '#/components/schemas/ScheduleRound'
+          type: array
+          title: Schedule
+          default: []
+        registration_fields:
+          items:
+            $ref: '#/components/schemas/RegistrationField'
+          type: array
+          title: Registration Fields
+          default: []
+      type: object
+      required:
+      - event_type
+      - name
+      - description
+      - team
+      - registration
+      title: EventCreateRequest
+    EventRegistrationInput:
+      properties:
+        team_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Name
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        registration_data:
+          additionalProperties: true
+          type: object
+          title: Registration Data
+          default: {}
+      type: object
+      title: EventRegistrationInput
+      description: "How a participant registers for an event: solo, creating a new\
+        \ team, or\njoining one that already exists. Exactly one of these three —\
+        \ never a\nteam_name *and* a team_id together, since that would be asking\
+        \ to both\ncreate and join in the same request.\n\n- Leave both fields unset\
+        \ to register solo.\n- Set `team_name` to create a new team and become its\
+        \ leader. The\n  backend assigns that team's `team_id` — the same way `event_id`\
+        \ and\n  `round_id` are assigned, via `id_generator.EventIDGenerator` — and\n\
+        \  returns it in the response. Share that id with teammates so they can\n\
+        \  join; the raw `team_name` text is never itself used as the id.\n- Set `team_id`\
+        \ to the id returned when the team was created, to join\n  that existing team\
+        \ as a member.\n\nWhether solo registration or team registration is required/allowed\
+        \ for a\ngiven event is governed by that event's `team.max` and\n`team.allow_single_registration`\
+        \ — enforced in the route, not here, since\nit depends on the event being\
+        \ registered for."
+    EventTeamAssignRequest:
+      properties:
+        user_id:
+          type: string
+          minLength: 1
+          title: User Id
+        role:
+          type: string
+          enum:
+          - event_head
+          - member
+          - volunteer
+          title: Role
+      type: object
+      required:
+      - user_id
+      - role
+      title: EventTeamAssignRequest
+    EventTeamRoleUpdateRequest:
+      properties:
+        role:
+          type: string
+          enum:
+          - event_head
+          - member
+          - volunteer
+          title: Role
+      type: object
+      required:
+      - role
+      title: EventTeamRoleUpdateRequest
+    EventUpdateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        poster:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Poster
+        team:
+          anyOf:
+          - $ref: '#/components/schemas/TeamRule'
+          - type: 'null'
+        prize_money:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/PrizeMoney'
+            type: array
+          - type: 'null'
+          title: Prize Money
+        registration:
+          anyOf:
+          - $ref: '#/components/schemas/RegistrationWindowUpdate'
+          - type: 'null'
+        schedule:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ScheduleRound'
+            type: array
+          - type: 'null'
+          title: Schedule
+        registration_fields:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/RegistrationField'
+            type: array
+          - type: 'null'
+          title: Registration Fields
+      type: object
+      title: EventUpdateRequest
+    ForgotPasswordRequest:
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email
+      type: object
+      required:
+      - email
+      title: ForgotPasswordRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HostelAssignTeamRequest:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        role:
+          type: string
+          title: Role
+        attendance:
+          type: boolean
+          title: Attendance
+          default: true
+      type: object
+      required:
+      - user_id
+      - role
+      title: HostelAssignTeamRequest
+    HostelCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        capacity:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Capacity
+        gender:
+          type: string
+          title: Gender
+        sharing:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Sharing
+          description: Max occupants per room
+        num_rooms:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Num Rooms
+          description: Number of rooms to pre-generate
+      type: object
+      required:
+      - name
+      - capacity
+      - gender
+      - sharing
+      - num_rooms
+      title: HostelCreateRequest
+    HostelUpdateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        capacity:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Capacity
+      type: object
+      title: HostelUpdateRequest
+      description: 'Every field optional: a caller updates only what it names.
+        `gender` and the rooming fields (`sharing`, `num_rooms`) are deliberately
+        absent — they cannot be changed after a hostel block is created.'
+    IssueCreateRequest:
+      properties:
+        facility_type:
+          type: string
+          title: Facility Type
+          description: hostel | mess
+        facility_id:
+          type: string
+          title: Facility Id
+          description: A readable hostel_id or mess_id, never an internal UUID. Must be
+            the facility this participant is actually placed in.
+        category:
+          type: string
+          title: Category
+          description: For a hostel — water | electricity | cleanliness | furniture
+            | internet | safety | noise | other. For a mess — food_quality | hygiene
+            | service | timing | dietary | other. Validated, because the answering
+            team's console groups and labels by it.
+        subject:
+          type: string
+          maxLength: 120
+          minLength: 3
+          title: Subject
+        body:
+          type: string
+          maxLength: 2000
+          minLength: 3
+          title: Body
+        room:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Room
+          description: Where the fault is. Defaults to the room the participant is
+            allotted, so the common case needs no typing.
+      type: object
+      required:
+      - facility_type
+      - facility_id
+      - category
+      - subject
+      - body
+      title: IssueCreateRequest
+    IssueUpdateRequest:
+      properties:
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+          description: open | in_progress | resolved
+        note:
+          anyOf:
+          - type: string
+            maxLength: 2000
+          - type: 'null'
+          title: Note
+          description: A line the reporter will read. Valid on its own, with no status
+            change — "we have ordered the part" is worth saying.
+      type: object
+      title: IssueUpdateRequest
+    LoginRequest:
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+      - email
+      - password
+      title: LoginRequest
+    MessAssignTeamRequest:
+      properties:
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        role:
+          type: string
+          title: Role
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        phone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone
+      type: object
+      required:
+      - role
+      title: MessAssignTeamRequest
+    MessCreateRequest:
+      properties:
+        mess_id:
+          type: string
+          title: Mess Id
+        name:
+          type: string
+          title: Name
+        capacity:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Capacity
+        type:
+          type: string
+          title: Type
+      type: object
+      required:
+      - mess_id
+      - name
+      - capacity
+      - type
+      title: MessCreateRequest
+    MessMealSlot:
+      properties:
+        start_time:
+          type: string
+          format: date-time
+          title: Start Time
+        end_time:
+          type: string
+          format: date-time
+          title: End Time
+        menu:
+          type: string
+          minLength: 1
+          title: Menu
+      type: object
+      required:
+      - start_time
+      - end_time
+      - menu
+      title: MessMealSlot
+      description: 'One meal sitting on one day: when it runs, and what it serves.'
+    MessMenuRequest:
+      properties:
+        menu:
+          additionalProperties:
+            additionalProperties:
+              $ref: '#/components/schemas/MessMealSlot'
+            type: object
+          type: object
+          title: Menu
+          default: {}
+      type: object
+      title: MessMenuRequest
+      description: 'A full replacement for a hall''s `menu`.
+
+
+        Keyed exactly as it is stored: `day_1`, `day_2`, ... each holding whichever
+
+        of `breakfast` / `lunch` / `dinner` that day actually serves. A day need
+
+        not carry all three — this is what lets an admin give a travel day
+
+        breakfast only, and how many days there are is entirely up to them.
+
+
+        A full replacement rather than a per-day patch: it keeps one write path
+
+        for "add a day", "drop a slot", or "move a sitting", instead of three.'
+    MessUpdateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        capacity:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Capacity
+        type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+      type: object
+      title: MessUpdateRequest
+      description: 'Every field optional: a caller updates only what it names.'
+    MockPaymentRequest:
+      properties:
+        method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Method
+          default: upi
+      type: object
+      title: MockPaymentRequest
+      description: 'A mock payment attempt for the mess or hostel fee (`POST /mess/pay`,
+
+        `POST /hostels/pay`).
+
+
+        The amount is never accepted from the client — each route charges its own
+
+        fixed fee, so a participant cannot pay an arbitrary amount — so this model
+
+        carries only the payment method, which exists purely to label the mock
+
+        receipt the same way `StayPaymentPage`''s frontend mock does.'
+    ParticipantAdminUpdateRequest:
+      properties:
+        full_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Full Name
+        house:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: House
+        gender:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gender
+        phone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone
+        mess_preference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mess Preference
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+        program:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Program
+        course_stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Course Stage
+        emergency_contact:
+          anyOf:
+          - $ref: '#/components/schemas/EmergencyContact'
+          - type: 'null'
+      type: object
+      title: ParticipantAdminUpdateRequest
+    PrizeMoney:
+      properties:
+        position:
+          type: string
+          minLength: 1
+          title: Position
+        amount:
+          type: integer
+          minimum: 0.0
+          title: Amount
+      type: object
+      required:
+      - position
+      - amount
+      title: PrizeMoney
+    ProfileCompleteRequest:
+      properties:
+        full_name:
+          type: string
+          title: Full Name
+        dob:
+          type: string
+          title: Dob
+        house:
+          type: string
+          title: House
+        gender:
+          type: string
+          title: Gender
+        phone:
+          type: string
+          title: Phone
+        mess_preference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mess Preference
+        country:
+          type: string
+          title: Country
+        state:
+          type: string
+          title: State
+        city:
+          type: string
+          title: City
+        address:
+          type: string
+          title: Address
+        emergency_contact:
+          anyOf:
+          - $ref: '#/components/schemas/EmergencyContact'
+          - type: 'null'
+        program:
+          type: string
+          title: Program
+        course_stage:
+          type: string
+          title: Course Stage
+        photo:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Photo
+        event_preferences:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Event Preferences
+      type: object
+      required:
+      - full_name
+      - dob
+      - house
+      - gender
+      - phone
+      - country
+      - state
+      - city
+      - address
+      - program
+      - course_stage
+      title: ProfileCompleteRequest
+    QueryCreateRequest:
+      properties:
+        category:
+          type: string
+          title: Category
+        subject:
+          type: string
+          minLength: 1
+          title: Subject
+        body:
+          type: string
+          minLength: 1
+          title: Body
+        target_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Id
+      type: object
+      required:
+      - category
+      - subject
+      - body
+      title: QueryCreateRequest
+    QueryReplyRequest:
+      properties:
+        body:
+          type: string
+          minLength: 1
+          title: Body
+      type: object
+      required:
+      - body
+      title: QueryReplyRequest
+    QueryTeamAssignRequest:
+      properties:
+        user_id:
+          type: string
+          minLength: 1
+          title: User Id
+      type: object
+      required:
+      - user_id
+      title: QueryTeamAssignRequest
+      description: 'Adds an existing backend_teams member to the flat query resolution
+
+        team roster (see routers/queries.py).'
+    QueryUpdateRequest:
+      properties:
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        assigned_team:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Assigned Team
+        assigned_to:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Assigned To
+      type: object
+      title: QueryUpdateRequest
+    RegisterRequest:
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email
+        password:
+          type: string
+          minLength: 8
+          title: Password
+      type: object
+      required:
+      - email
+      - password
+      title: RegisterRequest
+    RegistrationField:
+      properties:
+        field_id:
+          type: string
+          minLength: 1
+          title: Field Id
+        label:
+          type: string
+          minLength: 1
+          title: Label
+        type:
+          type: string
+          title: Type
+        required:
+          type: boolean
+          title: Required
+          default: true
+      type: object
+      required:
+      - field_id
+      - label
+      - type
+      title: RegistrationField
+    RegistrationWindow:
+      properties:
+        start_time:
+          type: string
+          title: Start Time
+        end_time:
+          type: string
+          title: End Time
+        allowed:
+          type: boolean
+          title: Allowed
+          default: true
+      type: object
+      required:
+      - start_time
+      - end_time
+      title: RegistrationWindow
+      description: 'When an event accepts registrations, and the manual kill-switch
+        beside it.
+
+
+        `allowed` is a Super Admin override, independent of the time window: the
+
+        effective open/closed state an API response reports is
+
+        ``allowed AND now within [start_time, end_time]`` (see
+
+        ``events._registration_open``). Neither bound is optional — an event with
+
+        no window has no reliable answer to "is registration open", which is the
+
+        ambiguity that used to be papered over by a bare ``open: bool``.'
+    RegistrationWindowUpdate:
+      properties:
+        start_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Time
+        end_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Time
+        allowed:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allowed
+      type: object
+      title: RegistrationWindowUpdate
+      description: 'Same as `RegistrationWindow`, but every field optional so `PUT
+
+        /events/{id}` can flip just `allowed` without having to resend the window.'
+    ResetPasswordRequest:
+      properties:
+        token:
+          type: string
+          title: Token
+        new_password:
+          type: string
+          minLength: 8
+          title: New Password
+      type: object
+      required:
+      - token
+      - new_password
+      title: ResetPasswordRequest
+    ScanQRRequest:
+      properties:
+        participant_id:
+          type: string
+          title: Participant Id
+        data:
+          type: string
+          title: Data
+        timestamp:
+          type: string
+          title: Timestamp
+      type: object
+      required:
+      - participant_id
+      - data
+      - timestamp
+      title: ScanQRRequest
+    ScheduleRound:
+      properties:
+        round_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Round Id
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          default: ''
+        start_time:
+          type: string
+          title: Start Time
+        end_time:
+          type: string
+          title: End Time
+        venue:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Venue
+      type: object
+      required:
+      - name
+      - start_time
+      - end_time
+      title: ScheduleRound
+    TeamRule:
+      properties:
+        min:
+          type: integer
+          minimum: 1.0
+          title: Min
+          default: 1
+        max:
+          type: integer
+          minimum: 1.0
+          title: Max
+          default: 1
+        house_vs_house_event:
+          type: boolean
+          title: House Vs House Event
+          default: false
+        allow_single_registration:
+          type: boolean
+          title: Allow Single Registration
+          default: true
+      type: object
+      title: TeamRule
+    TeamUpdateInput:
+      properties:
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        team_role:
+          anyOf:
+          - type: string
+            enum:
+            - leader
+            - member
+          - type: 'null'
+          title: Team Role
+      type: object
+      title: TeamUpdateInput
+      description: 'A partial update: a head may move a participant without restating
+        their role,
+
+        or change the role without restating the team.
+
+
+        Both fields default to ``None``, so "absent" and "explicitly null" look the
+
+        same on the model — the route separates them with ``model_fields_set``
+
+        instead. Only ``team_id`` is nullable in the data: clearing it takes the
+
+        participant off their team, whereas a stored ``team_role`` is always one of
+
+        `models.PARTICIPANT_TEAM_ROLES` — "leader" or "member".'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    WorkshopAssignVolunteerRequest:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        role:
+          type: string
+          title: Role
+          default: workshop_volunteer
+        attendance:
+          type: boolean
+          title: Attendance
+          default: true
+      type: object
+      required:
+      - user_id
+      title: WorkshopAssignVolunteerRequest
+    WorkshopCreateRequest:
+      properties:
+        slot_id:
+          type: string
+          pattern: ^D\d+S\d+$
+          title: Slot Id
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        description:
+          type: string
+          minLength: 1
+          title: Description
+        venue:
+          type: string
+          minLength: 1
+          title: Venue
+        capacity:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Capacity
+        instructions:
+          type: string
+          minLength: 1
+          title: Instructions
+        registration_start:
+          type: string
+          title: Registration Start
+        registration_end:
+          type: string
+          title: Registration End
+        registration_open:
+          type: boolean
+          title: Registration Open
+          default: true
+      type: object
+      required:
+      - slot_id
+      - name
+      - description
+      - venue
+      - capacity
+      - instructions
+      - registration_start
+      - registration_end
+      title: WorkshopCreateRequest
+    WorkshopParticipantUpdateRequest:
+      properties:
+        attended:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Attended
+        booking_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Booking Type
+      type: object
+      title: WorkshopParticipantUpdateRequest
+      description: 'An authorised correction to one participant''s record *for one
+        workshop*.
+
+
+        Both fields are optional so a caller sends only what changes; an empty body
+        is
+
+        rejected by the route rather than silently doing nothing.
+
+
+        Deliberately scoped to the two fields the workshop owns on
+
+        ``participants.workshops[]`` — whether they turned up, and whether the seat
+        was
+
+        booked ahead or taken at the door. Identity fields (name, email, phone, house,
+
+        academic record) are *not* editable here: they belong to the participant,
+        they
+
+        are read by every other screen in the fest, and a workshop volunteer is not
+        who
+
+        should be rewriting them.'
+    WorkshopSlotCreateRequest:
+      properties:
+        slot_id:
+          type: string
+          pattern: ^D\d+S\d+$
+          title: Slot Id
+        start_time:
+          type: string
+          title: Start Time
+        end_time:
+          type: string
+          title: End Time
+      type: object
+      required:
+      - slot_id
+      - start_time
+      - end_time
+      title: WorkshopSlotCreateRequest
+    WorkshopSlotUpdateRequest:
+      properties:
+        start_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Time
+        end_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Time
+      type: object
+      title: WorkshopSlotUpdateRequest
+      description: 'Every field optional so a caller can push just one of the two
+        — the route
+
+        merges whatever is given onto the stored document before re-validating
+
+        end > start, the same pattern `events.py` uses for `RegistrationWindowUpdate`.'
+    WorkshopUpdateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        venue:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Venue
+        capacity:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Capacity
+        instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Instructions
+        registration_start:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Registration Start
+        registration_end:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Registration End
+        registration_open:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Registration Open
+      type: object
+      title: WorkshopUpdateRequest
+      description: 'Every field optional so a caller updates only what it names. `slot_id`
+        is
+
+        deliberately absent: a workshop''s slot is fixed at creation because
+
+        participants'' bookings reference it (same rule as before this restructure).
+
+        `start_time` is likewise absent as a direct field — it only ever changes
+
+        via a cascaded slot edit (`PUT /workshop-slots/{slot_id}`), never directly.'
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+- name: Auth
+  description: Authentication and profile management
+- name: Backend Teams
+  description: Super-admin staff account management
+- name: Participants
+  description: Admin roster, statistics, and admin edit of participant records
+- name: Events
+  description: Event creation, registration, team management, scanning, and announcements
+- name: Workshop Slots
+  description: Super-admin time slot definitions for workshops
+- name: Workshops
+  description: Workshop creation, registration, attendance scanning, and roster
+- name: Mess
+  description: Mess halls, menus, allocation, scanning, and payments
+- name: Hostels
+  description: Hostel blocks, room allocation, entry/exit scanning, and payments
+- name: Queries
+  description: Participant queries and staff reply thread
+- name: Issues
+  description: Participant-hosted hostel/mess fault reporting
+- name: Audit
+  description: Super-admin audit trail and summary reports
+- name: Embeddings
+  description: OpenAI-compatible embeddings for preference matching

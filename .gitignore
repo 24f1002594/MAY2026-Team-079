@@ -1,0 +1,28 @@
+# Local editor configuration
+.zed/
+*.pdf
+*.md
+node_modules/
+
+# Kiro local settings (MCP server config, machine-specific)
+.kiro/settings/
+
+# Playwright MCP browser session artifacts (console logs, traces, screenshots)
+.playwright-mcp/
+
+graphify-out/
+graphify-out
+
+__pycache__/
+*.pyc
+
+# Secrets and local database credentials must never be committed.
+# `*.example` templates are deliberately still tracked.
+*.env
+.env
+!*.env.example
+
+# Database dumps taken before destructive maintenance. They are full participant
+# documents, so they carry password hashes and per-user RSA private keys and must
+# never be committed. Safe to delete once the change they cover is settled.
+.backups/
