@@ -1,4 +1,5 @@
 import os
+import secrets
 from datetime import datetime, timedelta
 from jose import jwt
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
@@ -7,8 +8,13 @@ import base64
 import json
 import bcrypt
 
-# In a production app, SECRET_KEY should be securely stored in the env
-SECRET_KEY = os.getenv("SECRET_KEY", "paradox-super-secret-jwt-key")
+# A deployment must provide a stable secret. Local development gets a fresh
+# process-only key so there is no known fallback that could sign valid tokens.
+_app_env = os.getenv("APP_ENV", "development").strip().lower()
+_configured_secret = os.getenv("SECRET_KEY", "").strip()
+if _app_env == "production" and not _configured_secret:
+    raise RuntimeError("SECRET_KEY must be configured when APP_ENV=production")
+SECRET_KEY = _configured_secret or secrets.token_urlsafe(32)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 1 week token expiry
 
