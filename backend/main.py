@@ -1,4 +1,4 @@
-import logging
+import logging, os
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -37,10 +37,10 @@ app = FastAPI(title="Paradox Connect API", lifespan=lifespan)
 # Add CORS middleware for the frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[origin.strip().rstrip("/") for origin in os.getenv("CORS_ORIGINS", "").split(",") if origin.strip()] or (["http://localhost:5173", "http://127.0.0.1:5173"] if os.getenv("APP_ENV", "development").strip().lower() != "production" else []),
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "X-Request-ID"],
     # So a browser client can actually read the correlation id off a response and
     # quote it in a bug report. Without this, `X-Request-ID` is set on the wire
     # but hidden from JavaScript by the same-origin header policy.
@@ -268,3 +268,13 @@ app.include_router(issues.router)
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+
+@app.get("/health", tags=["operations"])
+def health_check():
+    """Return readiness only when PostgreSQL can answer a connection check."""
+    from db import check_connection
+
+    if not check_connection():
+        raise HTTPException(status_code=503, detail="Database unavailable")
+    return {"status": "ok"}
