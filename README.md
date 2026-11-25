@@ -181,12 +181,11 @@ to the exact Vercel origin (for example, `https://your-project.vercel.app`). Ren
 generates `SECRET_KEY` from the Blueprint. The API runs Alembic migrations during
 build and exposes `/health` as a database readiness check.
 
-Neon's free PostgreSQL plan currently provides 1 GB per project and 100 CU-hours
-per month, and suspends compute after five idle minutes. Render's free web services
-sleep after 15 minutes of inactivity, so the first API request after idle can be
-slow. Treat this as a demonstration deployment: free-plan limits, no uptime SLA, and
-limited restore history are not suitable for dependable production data. Never
-seed real participant data into a public demo.
+The current demo uses Render's free PostgreSQL instance, which expires on December
+25, 2026. Render's free web services sleep after 15 minutes of inactivity, so the
+first API request after idle can be slow. Treat this as a temporary demonstration:
+free-plan limits, no uptime SLA, and the database expiry make it unsuitable for
+dependable production data. Never seed real participant data into a public demo.
 
 Payments remain simulated; no money is moved. Do not describe the deployed demo as
 accepting real payments.
