@@ -1,4 +1,5 @@
-import logging, os
+import logging
+import os
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,10 +35,22 @@ _log = log_config.get_logger("paradox.profile")
 
 app = FastAPI(title="Paradox Connect API", lifespan=lifespan)
 
-# Add CORS middleware for the frontend
+_app_env = os.getenv("APP_ENV", "development").strip().lower()
+_configured_origins = os.getenv("CORS_ORIGINS", "")
+if _app_env == "production" and not _configured_origins.strip():
+    raise RuntimeError("CORS_ORIGINS must list the deployed frontend origin when APP_ENV=production")
+_allowed_origins = [
+    origin.strip().rstrip("/")
+    for origin in _configured_origins.split(",")
+    if origin.strip()
+]
+if not _allowed_origins and _app_env != "production":
+    _allowed_origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+
+# Only the deployed frontend and local development origins may call the API.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origin.strip().rstrip("/") for origin in os.getenv("CORS_ORIGINS", "").split(",") if origin.strip()] or (["http://localhost:5173", "http://127.0.0.1:5173"] if os.getenv("APP_ENV", "development").strip().lower() != "production" else []),
+    allow_origins=_allowed_origins,
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Authorization", "Content-Type", "X-Request-ID"],
@@ -51,6 +64,16 @@ app.add_middleware(
 # so that it ends up the outermost layer — `add_middleware` inserts at the front
 # of the stack — and therefore observes every response the app produces.
 install_request_logging(app)
+
+
+@app.get("/health", tags=["operations"])
+def health_check():
+    """Return readiness only when PostgreSQL can answer a connection check."""
+    from db import check_connection
+
+    if not check_connection():
+        raise HTTPException(status_code=503, detail="Database unavailable")
+    return {"status": "ok"}
 
 
 # ==========================================
@@ -268,13 +291,3 @@ app.include_router(issues.router)
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
-
-
-@app.get("/health", tags=["operations"])
-def health_check():
-    """Return readiness only when PostgreSQL can answer a connection check."""
-    from db import check_connection
-
-    if not check_connection():
-        raise HTTPException(status_code=503, detail="Database unavailable")
-    return {"status": "ok"}

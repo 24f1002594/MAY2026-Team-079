@@ -169,6 +169,28 @@ the app is fully usable end to end.
 
 This comprehensive guide covers how to set up and run the Paradox Connect backend from scratch, including environment configuration, database setup, seeding, and deployment.
 
+### Free demo deployment
+
+The repository includes a Render Blueprint for the FastAPI API (`render.yaml`) and a
+Vercel SPA rewrite (`frontend/vercel.json`). Deploy the frontend as a Vercel static
+site with the project root set to `frontend`, build command `npm run build`, and
+output directory `dist`. Set `VITE_API_BASE_URL` to the deployed Render API URL
+without a trailing slash. Deploy the backend from this repository using the Render
+Blueprint, and set `DATABASE_URL` to a PostgreSQL connection URL and `CORS_ORIGINS`
+to the exact Vercel origin (for example, `https://your-project.vercel.app`). Render
+generates `SECRET_KEY` from the Blueprint. The API runs Alembic migrations during
+build and exposes `/health` as a database readiness check.
+
+Neon's free PostgreSQL plan currently provides 1 GB per project and 100 CU-hours
+per month, and suspends compute after five idle minutes. Render's free web services
+sleep after 15 minutes of inactivity, so the first API request after idle can be
+slow. Treat this as a demonstration deployment: free-plan limits, no uptime SLA, and
+limited restore history are not suitable for dependable production data. Never
+seed real participant data into a public demo.
+
+Payments remain simulated; no money is moved. Do not describe the deployed demo as
+accepting real payments.
+
 ---
 
 ### **Prerequisites**
